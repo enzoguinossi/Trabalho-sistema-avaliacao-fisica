@@ -32,6 +32,8 @@ programa {
                     exibirEstadoNutricional(indicePacienteEscolhido)
                 pare
                 caso 5:
+                	indicePacienteEscolhido = escolherPaciente()
+                	exibirGastoEnergetico(indicePacienteEscolhido)
                 pare
                 caso 6:
                     escreva("\nEncerrando o programa...\n")
@@ -107,7 +109,7 @@ programa {
             escreva("|  6 - Sair                       |\n")
             escreva("|                                 |\n")
             escreva("+---------------------------------+\n")
-
+            escreva("Escolha: ")
             leia(inputOpcao)
 
             se (Tipos.cadeia_e_inteiro(inputOpcao, 10)) {
@@ -266,23 +268,104 @@ programa {
         cadeia msgFinal = estadosNutricionais[indiceEstado][1]
 
         cadeia resultado = 
-        ("*******************************************\n" +
+        ("*************************************************\n" +
          "     Relatório do Estado Nutricional\n" +
-         "*******************************************\n" +
-         "Paciente: " + pacientes[indicePaciente][1] + "\n" +
-         "Peso : " + pacientes[indicePaciente][3] + " kg\n" +
-         "Altura : " + pacientes[indicePaciente][4] + " cm\n" +
-         "Idade : " + pacientes[indicePaciente][5] + " anos\n" +
-         "IMC : " + imc + "\n" +
-         "Peso Ideal : " + calcularPesoIdeal(indicePaciente) + "\n" +
+         "*************************************************\n" +
+         "          Paciente: " + pacientes[indicePaciente][1] + "\n" +
+         "              Peso: " + pacientes[indicePaciente][3] + " kg\n" +
+         "            Altura: " + pacientes[indicePaciente][4] + " cm\n" +
+         "             Idade: " + pacientes[indicePaciente][5] + " anos\n" +
+         "               IMC: " + imc + "\n" +
+         "        Peso Ideal: " + calcularPesoIdeal(indicePaciente) + "\n" +
          "Estado Nutricional: " + estadoNutricional + "\n" +
 
-         "*******************************************\n"+
-         msgFinal + "\n" +
-         "*******************************************\n")
+         "*************************************************\n"+
+         "    ",msgFinal + "\n" +
+         "*************************************************\n")
          escreva(resultado)
          enterContinuar()
     }
+
+    //=============================================================
+    // GASTO ENERGÉTICO
+    //=============================================================
+    funcao vazio exibirGastoEnergetico(inteiro indicePaciente) {
+        cadeia inputOpcao
+        inteiro opcao = -1
+        logico valido = falso
+        real gastoEnergetico = 0.0
+
+        faca {
+            limpa()
+            escreva("+---------------------------------------------------+\n")
+            escreva("|   Insira o grau de atividade física do paciente   |\n")
+            escreva("+---------------------------------------------------+\n")
+            escreva("|                                                   |\n")
+            escreva("|                    1 - Baixo                      |\n")
+            escreva("|                    2 - Médio                      |\n")
+            escreva("|                    3 - Alto                       |\n")
+            escreva("|                                                   |\n")
+            escreva("+---------------------------------------------------+\n")
+            escreva("Escolha: ")
+            leia(inputOpcao)
+            se (Tipos.cadeia_e_inteiro(inputOpcao, 10)) {
+                opcao = Tipos.cadeia_para_inteiro(inputOpcao, 10)
+                se(opcao >= 1 e opcao <=3) {
+                    valido = verdadeiro
+                } senao {
+                    valido = falso
+                    escreva("\nValor inválido! Tente novamente.\n")
+                    Util.aguarde(1000)
+                }
+            } senao {
+                valido = falso
+                escreva("\nValor inválido! Tente novamente.\n")
+                Util.aguarde(1000)
+            }
+         } enquanto(nao valido)
+         gastoEnergetico = calcularGastoEnergetico(indicePaciente, opcao)
+         
+         cadeia resultado = 
+            ("***********************************\n" +
+            "Resultado — Gasto Energético \n" +
+            "***********************************\n" +
+            "Paciente: " + pacientes[indicePaciente][1] + "\n" +
+            "Gasto Energético: " + gastoEnergetico + "\n" +
+            "***********************************\n")
+         escreva(resultado)
+         enterContinuar()
+         
+    }
+
+    funcao real calcularGastoEnergetico(inteiro indicePaciente, inteiro nivelAtividadeFisica) {
+        inteiro generoInteiro = Tipos.cadeia_para_inteiro(pacientes[indicePaciente][2], 10)
+        logico genero = Tipos.inteiro_para_logico(generoInteiro)
+        real pesoPaciente = Tipos.cadeia_para_real(pacientes[indicePaciente][3])
+        real alturaPaciente = Tipos.cadeia_para_real(pacientes[indicePaciente][4])
+        inteiro idadePaciente = Tipos.cadeia_para_inteiro(pacientes[indicePaciente][5], 10)
+
+        real gastoEnergeticoBasal, gastoEnergeticoTotal
+
+        cadeia listaNivelAtividadeFisica[3][2] = 
+        {
+        {"Baixo", "1.3"},
+        {"Medio", "1.5"},
+        {"Alto", "1.7"}
+        }
+
+        real fatorAtividadeFisica = Tipos.cadeia_para_real(listaNivelAtividadeFisica[nivelAtividadeFisica - 1][1])
+
+        se (nao genero) { // homem
+            gastoEnergeticoBasal = ((13.75 * pesoPaciente) + (5 * alturaPaciente) - (6.77 * idadePaciente) + 66.5)
+        } senao { // mulher
+            gastoEnergeticoBasal = ((9.56 * pesoPaciente) + (1.85 * alturaPaciente) - (4.68 * idadePaciente) + 65.71)
+        }
+
+        gastoEnergeticoTotal = (gastoEnergeticoBasal * fatorAtividadeFisica)
+
+        retorne gastoEnergeticoTotal
+    }
+
     //=============================================================
     // UTIL
     //=============================================================
@@ -299,7 +382,7 @@ programa {
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 2517; 
+ * @POSICAO-CURSOR = 13094; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
