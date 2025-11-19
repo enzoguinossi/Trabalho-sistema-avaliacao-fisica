@@ -149,29 +149,85 @@ programa {
     //=============================================================
     funcao vazio cadastrarPaciente(){
         limpa()
+        //=============================================================
+        // CHECA SE EXISTE LINHAS DISPONIVEIS NA MATRIZ PACIENTES
+        //=============================================================
         se (ultimoIndicePaciente >= 9) {
             escreva("Limite máximo de pacientes atingido!\n")
             retorne
         }
 
         cadeia nome, genero, peso, altura, idade
+        logico valido = verdadeiro
+
         inteiro novoID = ultimoCodigoPaciente + 1
         inteiro indiceNovoPaciente = ultimoIndicePaciente + 1
-
+        //=============================================================
+        // NOME PACIENTE
+        //=============================================================
         escreva("Digite o nome do paciente a ser cadastrado: \n")
         leia(nome)
 
+        //=============================================================
+        // GENERO PACIENTE
+        //=============================================================
+        faca{
         escreva("Insira o gênero do paciente (0=Homem, 1=Mulher): \n")
         leia(genero)
+        se(genero == "1" ou genero == "0") {
+            valido = verdadeiro
+        } senao {
+            valido = falso
+            escreva("\nValor inválido! Tente novamente.\n")
+            Util.aguarde(1000)
+        }
+        } enquanto(nao valido)
 
+        //=============================================================
+        // PESO PACIENTE
+        //=============================================================
+        faca{
         escreva("Insira o peso do paciente (kg): \n")
         leia(peso)
+        se(Tipos.cadeia_e_inteiro(peso, 10) ou Tipos.cadeia_e_real(peso)) {
+            valido = verdadeiro
+        } senao {
+            valido = falso
+            escreva("\nValor inválido! Tente novamente.\n")
+            Util.aguarde(1000)
+        }
+        } enquanto(nao valido)
 
+        //=============================================================
+        // ALTURA PACIENTE
+        //=============================================================
+        faca{
         escreva("Digite a altura do paciente (cm): \n")
         leia(altura)
+        se(Tipos.cadeia_e_inteiro(altura, 10) ou Tipos.cadeia_e_real(altura)) {
+            valido = verdadeiro
+        } senao {
+            valido = falso
+            escreva("\nValor inválido! Tente novamente.\n")
+            Util.aguarde(1000)
+        }
+        } enquanto(nao valido)
 
+        //=============================================================
+        // IDADE PACIENTE
+        //=============================================================
+        faca{
         escreva("Insira a idade do paciente: \n")
         leia(idade)
+        se(Tipos.cadeia_e_inteiro(idade, 10)) {
+            valido = verdadeiro
+        } senao {
+            valido = falso
+            escreva("\nValor inválido! Tente novamente.\n")
+            Util.aguarde(1000)
+        }
+        } enquanto(nao valido)
+
 
         pacientes[indiceNovoPaciente][0] = Tipos.inteiro_para_cadeia(novoID, 10)
         pacientes[indiceNovoPaciente][1] = nome
@@ -394,15 +450,3 @@ programa {
         limpa()
     }
 }
-
-/* $$$ Portugol Studio $$$ 
- * 
- * Esta seção do arquivo guarda informações do Portugol Studio.
- * Você pode apagá-la se estiver utilizando outro editor.
- * 
- * @POSICAO-CURSOR = 1981; 
- * @PONTOS-DE-PARADA = ;
- * @SIMBOLOS-INSPECIONADOS = ;
- * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
- * @FILTRO-ARVORE-TIPOS-DE-SIMBOLO = variavel, vetor, matriz, funcao;
- */
