@@ -74,5 +74,5 @@ Todo o programa funciona diretamente no console, sem instalação adicional.
 
 ---
 
-> 🎉 **Desenvolvido por [Enzo Guinossi](https://www.linkedin.com/in/enzo-wacker-guinossi/)** 🎉
+> 🎉 **Desenvolvido por [Enzo Guinossi](https://www.linkedin.com/in/enzoguinossi/)** 🎉
 
