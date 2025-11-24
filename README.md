@@ -60,7 +60,7 @@ Toda navegação é feita pelo console.
 
 Para executar o sistema:
 
-1. Abra o arquivo `.por` / `.alg` no **Portugol Studio**.  
+1. Abra o arquivo `.por` no **Portugol Studio**.  
 2. Clique em **Executar**.  
 3. Use o teclado para escolher as opções do menu.  
 
