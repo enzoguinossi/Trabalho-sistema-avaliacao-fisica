@@ -164,6 +164,7 @@ programa {
         //=============================================================
         se (ultimoIndicePaciente >= 9) {
             escreva("Limite máximo de pacientes atingido!\n")
+            enterContinuar()
             retorne
         }
 
@@ -475,3 +476,14 @@ programa {
         limpa()
     }
 }
+/* $$$ Portugol Studio $$$ 
+ * 
+ * Esta seção do arquivo guarda informações do Portugol Studio.
+ * Você pode apagá-la se estiver utilizando outro editor.
+ * 
+ * @POSICAO-CURSOR = 20883; 
+ * @PONTOS-DE-PARADA = ;
+ * @SIMBOLOS-INSPECIONADOS = ;
+ * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
+ * @FILTRO-ARVORE-TIPOS-DE-SIMBOLO = variavel, vetor, matriz, funcao;
+ */
